@@ -36,6 +36,9 @@ class Client:
     async def dispatch(self, data: dict) -> None:
         """Dispatch a message to all listeners."""
 
+        if data.get("message_type") == "heartbeat":
+            return  # TODO: Handle heartbeats
+
         for listener in self._listeners:
             await listener(data)
 
