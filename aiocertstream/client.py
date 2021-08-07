@@ -27,11 +27,10 @@ class Client:
 
         return coro
 
-    def run(self) -> None:
+    def run(self, reconnect: bool = True) -> None:
         """Make a blocking call to run the client."""
 
-        while True:
-            self._loop.run_until_complete(self.start())
+        self._loop.run_until_complete(self.start(reconnect))
 
     async def dispatch(self, data: dict) -> None:
         """Dispatch a message to all listeners."""
