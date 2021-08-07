@@ -42,11 +42,19 @@ class Client:
         for listener in self._listeners:
             await listener(data)
 
-    async def start(self) -> None:
-        """Start the client."""
+    async def _start(self) -> None:
+        """Intenally start the websocket."""
 
         self._ws = await self._session.ws_connect(self._url)
 
         async for message in self._ws:
             if message.type == WSMsgType.TEXT:
                 self._loop.create_task(self.dispatch(loads(message.data)))
+
+    async def start(self, *, reconnect: bool = True) -> None:
+        """Start the client."""
+
+        while True:
+            await self._start()
+            if not reconnect:
+                break
