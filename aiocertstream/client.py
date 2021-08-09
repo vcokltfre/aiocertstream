@@ -30,7 +30,7 @@ class Client:
     def run(self, reconnect: bool = True) -> None:
         """Make a blocking call to run the client."""
 
-        self._loop.run_until_complete(self.start(reconnect))
+        self._loop.run_until_complete(self.start(reconnect=reconnect))
 
     async def dispatch(self, data: dict) -> None:
         """Dispatch a message to all listeners."""
