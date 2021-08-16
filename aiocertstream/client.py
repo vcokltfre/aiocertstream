@@ -2,7 +2,7 @@ from asyncio import AbstractEventLoop, get_event_loop
 from json import loads
 from typing import Coroutine
 
-from aiohttp import ClientSession, ClientWebSocketResponse, WSMsgType
+from aiohttp import ClientSession, ClientWebSocketResponse, WSMsgType, ServerDisconnectedError
 
 
 class Client:
@@ -54,6 +54,9 @@ class Client:
         """Start the client."""
 
         while True:
-            await self._start()
+            try:
+                await self._start()
+            except ServerDisconnectedError:
+                pass
             if not reconnect:
                 break
