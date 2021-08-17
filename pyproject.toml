@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiocertstream"
-version = "0.1.4"
+version = "0.1.5"
 description = "An async client for certstream."
 authors = ["vcokltfre <vcokltfre@gmail.com>"]
 repository = "https://github.com/vcokltfre/aiocertstream"

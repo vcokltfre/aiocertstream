@@ -1,5 +1,6 @@
 from asyncio import AbstractEventLoop, get_event_loop
 from json import loads
+from traceback import print_exc
 from typing import Coroutine
 
 from aiohttp import ClientSession, ClientWebSocketResponse, WSMsgType, ServerDisconnectedError
@@ -56,7 +57,7 @@ class Client:
         while True:
             try:
                 await self._start()
-            except ServerDisconnectedError:
-                pass
+            except Exception:
+                print_exc()
             if not reconnect:
                 break
