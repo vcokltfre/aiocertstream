@@ -1,4 +1,4 @@
-from asyncio import AbstractEventLoop, get_event_loop
+from asyncio import AbstractEventLoop, get_event_loop, sleep
 from json import loads
 from traceback import print_exc
 from typing import Coroutine
@@ -54,10 +54,16 @@ class Client:
     async def start(self, *, reconnect: bool = True) -> None:
         """Start the client."""
 
+        backoff = 0.5
+
         while True:
             try:
+                await sleep(backoff)
                 await self._start()
+                backoff = 0.5
             except Exception:
                 print_exc()
+                if backoff < 5:
+                    backoff *= 2
             if not reconnect:
                 break
